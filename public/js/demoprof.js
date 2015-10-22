@@ -10,9 +10,17 @@ $(document).ready(function(){
   	e.preventDefault();
   	var formdata = $('#new-request-input').val();
   	console.log("request is: " + formdata);
-  	var requestHtml = "<li>" + formdata + "<br><br><button>Mark as answered</button><br><br><button>Delete</button></li>";
+  	var requestHtml = "<li>" + formdata + "<br><br><button class='answered'>Mark as answered</button><br><br><button class='delete'>Delete</button></li>";
   	$(this)[0].reset();
   	$('.active').prepend(requestHtml);
+  });
+
+  //When delete button is clicked
+  $('.requests').on('click', '.delete', function() {
+  	console.log("delete button was clicked");
+  	var deleteRequest = $(this).closest('li');
+  	$(deleteRequest).remove();
+
   });
 
 
