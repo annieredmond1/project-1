@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- include header portion page -->
+  <% include ./_head %>
+</head>
+<body>
+
+<!-- nav bar -->
+  <% include ./_nav %>
+
+  <!-- heading -->
+  <div class="jumbotron">
+    <h1>Pray for me!</h1>
+  </div>
+
+  <!-- input forms -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <a class="btn btn-default" id="view-public" href="#" role="button">View Public Profile</a>
+        <br>
+        <br>
+        <form class="form-inline" id="new-request">
+          <div class="input-group">
+            <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">Submit</span>
+          </div>
+        </form>
+        <!-- <form class="form-inline" id="new-request">
+          <div class="form-group">
+            <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request...">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- lists of prayer requests -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 requests">
+      <h1>Active prayer requests</h1>
+        <ul class=" active list-unstyled">
+          <% for(var i = requests.length - 1; i>=0; i--) { %>
+            <% if(!requests[i].completed) { %>
+              <li><%=requests[i].description%>
+                <br>
+                <br>
+                <input class="answered" type="button" value="Mark as answered"></input>
+                <br>
+                <br>
+                <input class="delete" type="button" value="Delete"></input>
+              </li>
+            <% } %>
+          <% } %>
+        </ul>
+        <h1>Answered prayer requests</h1>
+        <ul class=" completed list-unstyled">
+          <% for(var i = requests.length - 1; i>=0; i--) { %>
+            <% if(requests[i].completed) { %>
+              <li><%=requests[i].description%>
+                <br>
+                <br>
+                <input class="delete" type="button" value="Delete"></input>
+              </li>
+            <% } %>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
