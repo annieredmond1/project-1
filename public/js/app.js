@@ -8,9 +8,9 @@ $(document).ready(function(){
   $('#new-request').on('submit', function(e) {
   	console.log('form submitted');
   	e.preventDefault();
-  	var formdata = $('#new-request-input').val();
-  	console.log("request is: " + formdata);
-  	var requestHtml = "<li>" + formdata + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+  	var formData = $('#new-request-input').val();
+  	console.log("request is: " + formData);
+  	var requestHtml = "<li>" + formData + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
   	$(this)[0].reset();
   	$('.active').prepend(requestHtml);
   });
@@ -31,8 +31,14 @@ $(document).ready(function(){
   	$(answerRequest).remove();
   });
 
+var publicView;
   $('#view-public').on('click', function() {
   	console.log('change to public view is clicked');
+    // if(publicView) {
+    //   publicView = false;
+    // } else {
+    //   publicView = true;
+    // }
   	
   });
 

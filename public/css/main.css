@@ -4,6 +4,7 @@ body {
 
 .jumbotron {
 	background-color: white;
+	text-align: center;
 }
 
 h1 {
@@ -17,6 +18,14 @@ h1 {
 #new-request-input {
 	min-width: 480px;
 }
+#new-request {
+	margin-top: 50px;
+}
+
+.switch {
+	text-align: center;
+}
+
 
 li {
 	background-color: white;

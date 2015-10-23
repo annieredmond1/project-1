@@ -3,36 +3,39 @@
 <head>
 <!-- include header portion page -->
   <% include ./_head %>
+
+  <!-- nav bar -->
+  <% include ./_nav %>
+
 </head>
 <body>
 
-<!-- nav bar -->
-  <% include ./_nav %>
+<!-- variable for view -->
+<% var publicView = true; %>
 
   <!-- heading -->
   <div class="jumbotron">
+    <% if(publicView) { %>
     <h1>Pray for me!</h1>
+    <% } else { %>
+    <h1>Welcome!</h1>
+    <h3>Use this page to manage prayer requests.</h3>
+    <% } %>
   </div>
 
   <!-- input forms -->
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <a class="btn btn-default" id="view-public" href="#" role="button">View Public Profile</a>
-        <br>
-        <br>
+        <div class="switch">
+        <a class="btn btn-default" id="view-public" href="#" role="button">Switch view</a>
+        </div>
         <form class="form-inline" id="new-request">
           <div class="input-group">
             <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." aria-describedby="basic-addon2">
             <span class="input-group-addon" id="basic-addon2">Submit</span>
           </div>
         </form>
-        <!-- <form class="form-inline" id="new-request">
-          <div class="form-group">
-            <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request...">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form> -->
       </div>
     </div>
   </div>
@@ -48,10 +51,20 @@
               <li><%=requests[i].description%>
                 <br>
                 <br>
-                <input class="answered" type="button" value="Mark as answered"></input>
+                <!-- if public view is false -->
+                <% if(!publicView) { %>
+                <input class="answered" type="button" value="Move to answered prayers"></input>
                 <br>
                 <br>
                 <input class="delete" type="button" value="Delete"></input>
+                <% } else { %>
+                <!-- if public view is true -->
+                  <span class="prayer-count">
+                  <p>Prayed for <%= requests[i].count %> times</p>
+                  <label><button type="button" class="btn btn-default btn-xs">O</button> I prayed for this request</label>
+                  </span>
+                <% } %>
+
               </li>
             <% } %>
           <% } %>
@@ -63,7 +76,13 @@
               <li><%=requests[i].description%>
                 <br>
                 <br>
-                <input class="delete" type="button" value="Delete"></input>
+                  <!-- if public view is false -->
+                  <% if(!publicView) { %>
+                    <input class="delete" type="button" value="Delete"></input>
+                  <% } else { %>
+                  <!-- if public view is true -->
+                    <p>Prayed for <%= requests[i].count %> times</p>
+                    <% } %>
               </li>
             <% } %>
           <% } %>
