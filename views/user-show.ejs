@@ -5,22 +5,21 @@
   <% include ./_head %>
 
   <!-- nav bar -->
-  <% include ./_nav %>
+  <% include ./_nav-user %>
 
 </head>
 <body>
-
-<!-- variable for view -->
-<% var publicView = true; %>
-
+<%var owner = false; %>
   <!-- heading -->
   <div class="jumbotron">
-    <% if(publicView) { %>
-    <h1>Pray for me!</h1>
-    <% } else { %>
-    <h1>Welcome!</h1>
-    <h3>Use this page to manage prayer requests.</h3>
-    <% } %>
+    <div class="container text-center">
+      <% if(owner) { %>
+      <h1>Pray for me!</h1>
+      <% } else { %>
+      <h1>Welcome!</h1>
+      <h3>Use this page to manage prayer requests.</h3>
+      <% } %>      
+    </div>
   </div>
 
   <!-- input forms -->
@@ -30,12 +29,15 @@
         <div class="switch">
         <a class="btn btn-default" id="view-public" href="#" role="button">Switch view</a>
         </div>
-        <form class="form-inline" id="new-request">
+        <!-- only show when public is false -->
+        <% if(!owner) { %>
+        <form class="form-inline" id="new-request" data-id="<%=user._id%>">
           <div class="input-group">
-            <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." aria-describedby="basic-addon2">
+            <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." name="description" aria-describedby="basic-addon2">
             <span class="input-group-addon" id="basic-addon2">Submit</span>
           </div>
         </form>
+        <% } %>
       </div>
     </div>
   </div>
@@ -46,13 +48,13 @@
       <div class="col-md-8 col-md-offset-2 requests">
       <h1>Active prayer requests</h1>
         <ul class=" active list-unstyled">
-          <% for(var i = requests.length - 1; i>=0; i--) { %>
-            <% if(!requests[i].completed) { %>
-              <li><%=requests[i].description%>
+          <% for(var i = user.requests.length - 1; i>=0; i--) { %>
+            <% if(!user.requests[i].completed) { %>
+              <li class="well"><%=user.requests[i].description%>
                 <br>
                 <br>
                 <!-- if public view is false -->
-                <% if(!publicView) { %>
+                <% if(!owner) { %>
                 <input class="answered" type="button" value="Move to answered prayers"></input>
                 <br>
                 <br>
@@ -60,8 +62,8 @@
                 <% } else { %>
                 <!-- if public view is true -->
                   <span class="prayer-count">
-                  <p>Prayed for <%= requests[i].count %> times</p>
-                  <label><button type="button" class="btn btn-default btn-xs">O</button> I prayed for this request</label>
+                  <p><strong>Prayed for <%= user.requests[i].count %> times</strong></p>
+                  <label><button type="button" class="btn btn-default btn-xs count">I prayed for this request</button></label>
                   </span>
                 <% } %>
 
@@ -71,17 +73,17 @@
         </ul>
         <h1>Answered prayer requests</h1>
         <ul class=" completed list-unstyled">
-          <% for(var i = requests.length - 1; i>=0; i--) { %>
-            <% if(requests[i].completed) { %>
-              <li><%=requests[i].description%>
+          <% for(var i = user.requests.length - 1; i>=0; i--) { %>
+            <% if(user.requests[i].completed) { %>
+              <li class="well"><%=user.requests[i].description%>
                 <br>
                 <br>
                   <!-- if public view is false -->
-                  <% if(!publicView) { %>
+                  <% if(!owner) { %>
                     <input class="delete" type="button" value="Delete"></input>
                   <% } else { %>
                   <!-- if public view is true -->
-                    <p>Prayed for <%= requests[i].count %> times</p>
+                    <p>Prayed for <%= user.requests[i].count %> times</p>
                     <% } %>
               </li>
             <% } %>

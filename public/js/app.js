@@ -4,16 +4,48 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
+
+
+//When sign up form submitted
+$('#signUpForm').on('submit', function(e) {
+  e.preventDefault();
+  console.log("form submitted");
+  var formData = $(this).serialize();
+  console.log(formData);
+  $.ajax({
+      url: '/api/users',
+      type: "POST",
+      data: formData
+  })
+  .done(function(data) {
+    console.log("made a new user");
+    window.location.href = "/" + data._id;
+  });
+});
+
+
   //When new prayer request is submitted
   $('#new-request').on('submit', function(e) {
   	console.log('form submitted');
   	e.preventDefault();
-  	var formData = $('#new-request-input').val();
+    var userId = $('#new-request').attr('data-id');
+  	var formData = $(this).serialize();
   	console.log("request is: " + formData);
-  	var requestHtml = "<li>" + formData + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
-  	$(this)[0].reset();
-  	$('.active').prepend(requestHtml);
-  });
+    console.log("user is : " + userId);
+  	$.ajax({
+      url: '/api/' + userId + '/requests',
+      type: "POST",
+      data: formData
+    })
+    .done(function(data) {
+      console.log("made a new post");
+        var requestHtml = "<li>" + formData + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+        
+        $('.active').prepend(requestHtml);
+      });
+
+    });
+
 
   //When delete button is clicked remove post
   $('.requests').on('click', '.delete', function() {
@@ -31,7 +63,7 @@ $(document).ready(function(){
   	$(answerRequest).remove();
   });
 
-var publicView;
+var owner;
   $('#view-public').on('click', function() {
   	console.log('change to public view is clicked');
     // if(publicView) {
@@ -41,6 +73,21 @@ var publicView;
     // }
   	
   });
+
+  //When prayed for button is clicked - update count
+  var requests;
+  $('.requests').on('click', '.count', function() {
+    console.log("count button clicked");
+    console.log();
+
+
+  });
+
+
+
+
+
+
 
 
 });
