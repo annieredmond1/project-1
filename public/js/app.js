@@ -4,13 +4,16 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
+//check if a user is logged in
 function checkAuth() {
   $.get('/api/current-user', function (data) {
     console.log("data is: " + data);
     if (data.user) {
       console.log("logged in");
+      $('.not-logged-in').hide();
     } else {
       console.log("not logged in");
+      $('.logged-in').hide();
     }
   });
 }
@@ -29,10 +32,26 @@ $('#signUpForm').on('submit', function(e) {
       data: user
   })
   .done(function(data) {
-    console.log("made a new user");
     window.location.href = "/" + data._id;
-    checkAuth();
+    console.log("made a new user");
+
   });
+});
+
+//when log out button is clicked
+$('#log-out').on('click', function(e) {
+  e.preventDefault();
+  $.ajax({
+    url: '/api/logout',
+    type: "GET"
+    
+  })
+  .done(function(data) {
+    console.log(data.msg);
+    window.location.href = "/";
+
+  });
+
 });
 
 //When user logs in

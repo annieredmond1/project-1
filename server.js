@@ -66,13 +66,19 @@ app.post('/api/users', function(req, res) {
 	});
 });
 
+//route for check if current user
 app.get('/api/current-user', function(req, res) {
 	console.log("found current user");
 	console.log("req.session.userId is: " + req.session.userId);
 	res.json({ user: req.session.user });
 });
 
-
+//route for loggin out
+app.get('/api/logout', function(req, res) {
+	req.session.userId = null;
+	req.session.user = null;
+	res.json({ msg: "User logged out successfully" });
+});
 
 //route for creating a request
 app.post('/api/:id/requests', function(req, res) {
