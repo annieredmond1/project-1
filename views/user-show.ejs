@@ -34,7 +34,7 @@
         <form class="form-inline" id="new-request" data-id="<%=user._id%>">
           <div class="input-group">
             <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." name="description" aria-describedby="basic-addon2">
-            <span class="input-group-addon" id="basic-addon2">Submit</span>
+            <button type="submit" class="input-group-addon" id="basic-addon2">Submit</button>
           </div>
         </form>
         <% } %>
@@ -46,9 +46,8 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 requests">
-      <h1>Active prayer requests</h1>
         <ul class=" active list-unstyled">
-          <% for(var i = user.requests.length - 1; i>=0; i--) { %>
+          <% for(var i = user.requests.length; i>0; i--) { %>
             <% if(!user.requests[i].completed) { %>
               <li class="well"><%=user.requests[i].description%>
                 <br>
@@ -66,12 +65,10 @@
                   <label><button type="button" class="btn btn-default btn-xs count">I prayed for this request</button></label>
                   </span>
                 <% } %>
-
               </li>
             <% } %>
           <% } %>
         </ul>
-        <h1>Answered prayer requests</h1>
         <ul class=" completed list-unstyled">
           <% for(var i = user.requests.length - 1; i>=0; i--) { %>
             <% if(user.requests[i].completed) { %>
@@ -84,7 +81,7 @@
                   <% } else { %>
                   <!-- if public view is true -->
                     <p>Prayed for <%= user.requests[i].count %> times</p>
-                    <% } %>
+                  <% } %>
               </li>
             <% } %>
           <% } %>

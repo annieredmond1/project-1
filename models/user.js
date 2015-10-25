@@ -47,9 +47,9 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 	});
 };
 
-// UserSchema.methods.checkPassword = function(password) {
-// 	return bcrypt.compareSync(password, this.passwordDigest);
-// };
+UserSchema.methods.checkPassword = function(password) {
+	return bcrypt.compareSync(password, this.passwordDigest);
+};
 
 
 var User = mongoose.model('User', UserSchema);

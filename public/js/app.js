@@ -4,33 +4,63 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
+function checkAuth() {
+  $.get('/api/current-user', function (data) {
+    console.log("data is: " + data);
+    if (data.user) {
+      console.log("logged in");
+    } else {
+      console.log("not logged in");
+    }
+  });
+}
 
+checkAuth();
 
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
   console.log("form submitted");
-  var formData = $(this).serialize();
-  console.log(formData);
+  var user = $(this).serialize();
+  console.log(user);
   $.ajax({
       url: '/api/users',
       type: "POST",
-      data: formData
+      data: user
   })
   .done(function(data) {
     console.log("made a new user");
     window.location.href = "/" + data._id;
+    checkAuth();
   });
 });
 
+//When user logs in
+  // $('#log-in').on('submit', function(e) {
+  //   e.preventDefault();
+  //   console.log("login form submitted");
+  //   var user = $('log-in').serialize();
+  //   console.log("user is: " + user);
+  //   $.ajax({
+  //     url: 'api/users',
+  //     type: "POST",
+  //     data: user
+  //   })
+  //   .done(function(data) {
+  //     console.log("user logged in");
+  //     window.location.href = "/" + data._id;
+  //   });
+  // });
 
+  
   //When new prayer request is submitted
   $('#new-request').on('submit', function(e) {
   	console.log('form submitted');
   	e.preventDefault();
     var userId = $('#new-request').attr('data-id');
   	var formData = $(this).serialize();
-  	console.log("request is: " + formData);
+    var newRequest = $( '#new-request-input').val();
+  	console.log("request is: " + newRequest);
     console.log("user is : " + userId);
   	$.ajax({
       url: '/api/' + userId + '/requests',
@@ -39,7 +69,7 @@ $('#signUpForm').on('submit', function(e) {
     })
     .done(function(data) {
       console.log("made a new post");
-        var requestHtml = "<li>" + formData + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+        var requestHtml = "<li>" + newRequest + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
         
         $('.active').prepend(requestHtml);
       });
