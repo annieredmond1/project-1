@@ -46,6 +46,7 @@ app.get('/:id', function(req, res) {
 		res.render("user-show", {demoUser: demoUser});
 	} else {
 		db.User.findById(req.params.id, function (err, user) {
+			console.log("user is ", user);
 			res.render("user-show", {user: user});
 
 		});		
@@ -99,7 +100,7 @@ app.post('/api/:id/requests', function (req, res) {
 			// console.log("request is: ", request);
 			user.requests.push(request);
 			user.save();
-			res.json(request);			
+			res.json(user);			
 		});
 
 			console.log("final user with request is: ", user);

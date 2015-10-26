@@ -81,12 +81,12 @@ $('#log-out').on('click', function(e) {
 
   
   //When new prayer request is submitted
-  $('#new-request').on('submit', function(e) {
+  $('#new-request').on('click', function(e) {
   	e.preventDefault();
     console.log('form submitted');
-    var userId = $('#new-request').attr('data-id');
+    var userId = $('#new-request-input').attr('data-id');
     console.log("userID is: " + userId);
-  	var formData = $(this).serialize();
+  	var formData = $('#new-request-input').serialize();
     console.log("formData is: " + formData);
     var newRequest = $( '#new-request-input').val();
   	console.log("request is: " + newRequest);
@@ -97,7 +97,7 @@ $('#log-out').on('click', function(e) {
     })
     .done(function(data) {
       console.log("made a new post");
-        var requestHtml = "<li>" + newRequest + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+        var requestHtml = "<li class='well'>" + newRequest + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
         
         $('.active').prepend(requestHtml);
       });

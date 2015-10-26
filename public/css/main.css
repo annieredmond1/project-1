@@ -28,3 +28,7 @@ body {
 	font-size: 80px;
 }
 
+.well {
+	background: rgba(255,255,255,.2);
+}
+
