@@ -75,7 +75,7 @@ $('#log-out').on('click', function(e) {
     })
     .done(function(data) {
       console.log("user logged in");
-      window.location.href = "/" + data._id;
+      window.location.href = "/users/" + data._id;
     });
   });
 
@@ -112,16 +112,28 @@ $('#log-out').on('click', function(e) {
   	$(deleteRequest).remove();
   });
 
-  //When mark as answered button is clicked remove post and append to answered list
-  $('.requests').on('click', '.answered', function() {
+  //When mark as answered button is clicked 
+  $('.requests').on('click', '.answered', function(e) {
+    e.preventDefault();
   	console.log("answered button was clicked");
   	var answerRequest = $(this).closest('li');
-  	var answerHtml = "<li>" + answerRequest.text() + "<br><br><input class='delete' type='button' value='Delete'></input></li>";
-  	$('.completed').prepend(answerHtml);
-  	$(answerRequest).remove();
+    var userId = $('#new-request-input').attr('data-id');
+    console.log("userID is: " + userId);
+    var requestId = answerRequest.attr('data-id');
+    console.log("requestId is: " + requestId);
+    $.ajax({
+      url: 'api/users/' + userId + '/requests/' + requestId,
+      type: "PUT"
+    })
+    .done(function(data) {
+      console.log("request marked as completed");
+      answerRequest.wrap('<strike>');
+    });
+  	
   });
 
-var owner;
+  
+
   $('#view-public').on('click', function() {
   	console.log('change to public view is clicked');
     // if(publicView) {
