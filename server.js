@@ -89,7 +89,7 @@ app.get('/api/logout', function (req, res) {
 });
 
 //route for creating a request
-app.post('/api/:id/requests', function (req, res) {
+app.post('/api/users/:id/requests', function (req, res) {
 	console.log(req.body);
 	db.User.findById( req.params.id, function (err, user) {
 		// console.log("user is: " + user);

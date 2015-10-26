@@ -91,7 +91,7 @@ $('#log-out').on('click', function(e) {
     var newRequest = $( '#new-request-input').val();
   	console.log("request is: " + newRequest);
   	$.ajax({
-      url: '/api/' + userId + '/requests',
+      url: '/api/users' + userId + '/requests',
       type: "POST",
       data: formData
     })
@@ -122,7 +122,7 @@ $('#log-out').on('click', function(e) {
     var requestId = answerRequest.attr('data-id');
     console.log("requestId is: " + requestId);
     $.ajax({
-      url: 'api/users/' + userId + '/requests/' + requestId,
+      url: '/api/users/' + userId + '/requests/' + requestId,
       type: "PUT"
     })
     .done(function(data) {
