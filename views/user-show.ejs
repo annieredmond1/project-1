@@ -2,23 +2,24 @@
 <html>
 <head>
 <!-- include header portion page -->
-  <% include ./_head %>
+ <% include ./_head.ejs %>
 
   <!-- nav bar -->
   <% include ./_nav %>
 
 </head>
 <body>
-<%var owner = false; %>
+<% var owner; %>
   <!-- heading -->
-  <div class="jumbotron">
-    <div class="container text-center">
-      <% if(owner) { %>
-      <h1>Pray for me!</h1>
-      <% } else { %>
-      <h1>Welcome!</h1>
-      <h3>Use this page to manage prayer requests.</h3>
-      <% } %>      
+  <div class="page-header">
+  <!-- show if owner -->
+    <div class="container text-center owner">
+        <h1>Welcome!</h1>
+        <h3>Use this page to manage prayer requests.</h3>      
+    </div>
+    <!-- show if visitor -->
+    <div class="container text-center visitor">
+        <h1>Pray for me!</h1>      
     </div>
   </div>
 
@@ -26,18 +27,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <div class="switch">
+        <!-- <div class="switch">
         <a class="btn btn-default" id="view-public" href="#" role="button">Switch view</a>
-        </div>
-        <!-- only show when public is false -->
-        <% if(!owner) { %>
-        <form class="form-inline" id="new-request" data-id="<%=user._id%>">
+        </div> -->
+        <!-- show if owner -->
+        <form class="form-inline owner" id="new-request" data-id="<%=user._id%>">
           <div class="input-group">
             <input type="text" class="form-control" id="new-request-input" placeholder="Enter new prayer request..." name="description" aria-describedby="basic-addon2">
             <button type="submit" class="input-group-addon" id="basic-addon2">Submit</button>
           </div>
         </form>
-        <% } %>
       </div>
     </div>
   </div>
@@ -52,19 +51,16 @@
               <li class="well"><%=user.requests[i].description%>
                 <br>
                 <br>
-                <!-- if public view is false -->
-                <% if(!owner) { %>
-                <input class="answered" type="button" value="Move to answered prayers"></input>
+                <!-- show if owner -->
+                <input class="answered owner" type="button" value="Move to answered prayers"></input>
                 <br>
                 <br>
                 <input class="delete" type="button" value="Delete"></input>
-                <% } else { %>
-                <!-- if public view is true -->
                   <span class="prayer-count">
                   <p><strong>Prayed for <%= user.requests[i].count %> times</strong></p>
-                  <label><button type="button" class="btn btn-default btn-xs count">I prayed for this request</button></label>
+                  <!-- show if visitor -->
+                  <label><button type="button" class="btn btn-default btn-xs count visitor">I prayed for this request</button></label>
                   </span>
-                <% } %>
               </li>
             <% } %>
           <% } %>
@@ -75,13 +71,9 @@
               <li class="well"><%=user.requests[i].description%>
                 <br>
                 <br>
-                  <!-- if public view is false -->
-                  <% if(!owner) { %>
-                    <input class="delete" type="button" value="Delete"></input>
-                  <% } else { %>
-                  <!-- if public view is true -->
+                  <!-- show if owner -->
+                    <input class="delete owner" type="button" value="Delete"></input>
                     <p>Prayed for <%= user.requests[i].count %> times</p>
-                  <% } %>
               </li>
             <% } %>
           <% } %>

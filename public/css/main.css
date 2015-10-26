@@ -1,57 +1,30 @@
 .navbar {
 	margin:0;
 	border-radius: 0;
-}
-
-/*body {
-	font-family: 'Montserrat', sans-serif;
-}
-
-.jumbotron {
-	background-color: white;
-	text-align: center;
-}
-
-h1 {
-	text-align: center;
-}
-
-#bio {
-	min-width: 480px;
-}
-
-#new-request-input {
-	min-width: 480px;
-}
-#new-request {
-	margin-top: 50px;
-}
-
-.switch {
-	text-align: center;
-}
-
-
-li {
-	background-color: white;
-	margin: 20px 0px 40px 0px;
-}
-
-.navbar {
-	background-color: black;
-}
-
-input[type="button"] {
+	background-color: rgba(202, 163, 94, .5);
 	border: none;
-	background-color: #D4CDDC;
-	font-weight: bolder;
+	
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	color: #443616;
+	background: url('http://i.imgur.com/oNLNwBm.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
 
 }
 
-.active li, .completed li {
-	padding: 30px;
-	border-radius: 30px;
-	font-size: 16px;
+.welcome-info {
+	font-size: 20px;
+	margin-top: 200px;
+	
+		
+}
+.welcome-info h1 {
+	font-size: 80px;
 }
 
-*/

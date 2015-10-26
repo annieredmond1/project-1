@@ -16,20 +16,19 @@ var UserSchema = new Schema ({
 
 
 
-UserSchema.statics.createSecure = function(email, password, callback) {
+UserSchema.statics.createSecure = function(userKeys, callback) {
 	var user = this;
 
 	bcrypt.genSalt(function(err, salt) {
-		bcrypt.hash(password, salt, function(err, hash) {
+		bcrypt.hash(userKeys.password, salt, function(err, hash) {
 			console.log(hash);
 
 			user.create({
-				email: email,
-				passwordDigest: hash
-				// first_name: first_name,
-				// last_name: last_name,
-				// description: description,
-				// requests: [requests]
+				email: userKeys.email,
+				passwordDigest: hash,
+				first_name: userKeys.first_name,
+				last_name: userKeys.last_name,
+				description: userKeys.description
 			}, callback);
 		});
 	});
@@ -40,7 +39,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 		console.log(user);
 
 		if(!user) {
-			console.log("No user with email " + email);
+			console.log("No user with email " + email, null);
 		} else if(user.checkPassword(password)) {
 			callback(null, user);
 		}

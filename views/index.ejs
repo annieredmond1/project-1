@@ -5,17 +5,19 @@
 </head>
 <body>
 <% include ./_nav %>
-  <div class="jumbotron text-center">
+<div class="scroller">
+  <div class="welcome-info text-center">
     <h1>Prayer</h1>
     <p>An interactive alternative to emailing prayer requests</p>
     <!-- button trigger sign up modal -->
-    <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signUpModal" role="button">Sign Up</a></p>
+    <p><a class="btn btn-default btn-lg" data-toggle="modal" data-target="#signUpModal" role="button">Sign Up</a></p>
     <ul class="list-unstyled">
       <li>Features:</li>
-      <li>  - See how many times people have prayed for each request</li>
-      <li>  - Let people know when your prayers have been answered</li>
+      <li>  - Mark prayer requests as completed</li>
+      <li>  - View how many times request is prayed for</li>
     </ul>
-  </div>
+  </div>  
+
 
 
 <!-- Modal -->
@@ -67,6 +69,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </body>
 </html>

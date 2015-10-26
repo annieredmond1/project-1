@@ -56,44 +56,53 @@ app.get('/:id', function(req, res) {
 //route for creating a user
 app.post('/api/users', function(req, res) {
 	var user = req.body;
-	db.User.createSecure(user.email, user.password, function(err, user) {
+	db.User.createSecure(user, function(err, user) {
 		if (err) console.log(err);
-		req.session.userId = user._id;
 		req.session.user = user;
-		console.log("user._id is: " + req.session.userId);
 		console.log("user is: " + user);
 		res.json(user);
 	});
 });
 
 //route for check if current user
-app.get('/api/current-user', function(req, res) {
+app.get('/api/current-user', function (req, res) {
 	console.log("found current user");
-	console.log("req.session.userId is: " + req.session.userId);
 	res.json({ user: req.session.user });
 });
 
-//route for loggin out
-app.get('/api/logout', function(req, res) {
-	req.session.userId = null;
+//route for logging in
+app.post('/api/login', function (req, res) {
+	var user = req.body;
+	User.authenticate(user.email, user.password, function (err, user) {
+		if (err) console.log(err);
+		req.session.user = user;	
+		res.json(user);
+	});
+});
+
+//route for logging out
+app.get('/api/logout', function (req, res) {
 	req.session.user = null;
 	res.json({ msg: "User logged out successfully" });
 });
 
 //route for creating a request
-app.post('/api/:id/requests', function(req, res) {
+app.post('/api/:id/requests', function (req, res) {
 	console.log(req.body);
 	db.User.findById( req.params.id, function (err, user) {
-		user.requests.push(req.body);
-		console.log(user.requests);
+		// console.log("user is: " + user);
+		db.Request.create(req.body, function (err, request) {
+			// console.log("new request created");
+			if (err) console.log(err);
+			// console.log("request is: ", request);
+			user.push(request);
+			res.json(request);			
+		});
+
+			console.log("final user with request is: ", user);
+
 	});
-	db.Request.create(req.body, function(err, request) {
-		console.log("new request created");
-		if (err) console.log(err);
-		console.log("final user with request is: " + user);
-		res.json(request);
-		
-	});
+	
 });
 
 app.listen(process.env.PORT || 3000, function() {

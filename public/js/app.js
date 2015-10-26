@@ -4,6 +4,8 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
+//variable to identify if user is logged in
+var owner;
 //check if a user is logged in
 function checkAuth() {
   $.get('/api/current-user', function (data) {
@@ -11,9 +13,14 @@ function checkAuth() {
     if (data.user) {
       console.log("logged in");
       $('.not-logged-in').hide();
+      $('.visitor').hide();
+      owner = true;
     } else {
       console.log("not logged in");
       $('.logged-in').hide();
+      $('.owner').hide();
+
+      owner = false;
     }
   });
 }
@@ -32,6 +39,7 @@ $('#signUpForm').on('submit', function(e) {
       data: user
   })
   .done(function(data) {
+
     window.location.href = "/" + data._id;
     console.log("made a new user");
 
@@ -54,33 +62,34 @@ $('#log-out').on('click', function(e) {
 
 });
 
-//When user logs in
-  // $('#log-in').on('submit', function(e) {
-  //   e.preventDefault();
-  //   console.log("login form submitted");
-  //   var user = $('log-in').serialize();
-  //   console.log("user is: " + user);
-  //   $.ajax({
-  //     url: 'api/users',
-  //     type: "POST",
-  //     data: user
-  //   })
-  //   .done(function(data) {
-  //     console.log("user logged in");
-  //     window.location.href = "/" + data._id;
-  //   });
-  // });
+// When user logs in
+  $('#log-in').on('submit', function(e) {
+    e.preventDefault();
+    console.log("login form submitted");
+    var user = $(this).serialize();
+    console.log("user is: " + user);
+    $.ajax({
+      url: 'api/login',
+      type: "POST",
+      data: user
+    })
+    .done(function(data) {
+      console.log("user logged in");
+      window.location.href = "/" + data._id;
+    });
+  });
 
   
   //When new prayer request is submitted
   $('#new-request').on('submit', function(e) {
-  	console.log('form submitted');
   	e.preventDefault();
+    console.log('form submitted');
     var userId = $('#new-request').attr('data-id');
+    console.log("userID is: " + userId);
   	var formData = $(this).serialize();
+    console.log("formData is: " + formData);
     var newRequest = $( '#new-request-input').val();
   	console.log("request is: " + newRequest);
-    console.log("user is : " + userId);
   	$.ajax({
       url: '/api/' + userId + '/requests',
       type: "POST",
