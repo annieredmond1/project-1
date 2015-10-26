@@ -31,5 +31,6 @@ body {
 .well {
 	background: white;
 	border-radius: 0px;
+	border: 1px solid rgba(202, 163, 94, .5);
 }
 

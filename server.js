@@ -89,28 +89,19 @@ app.get('/api/logout', function (req, res) {
 
 //route for creating a request
 app.post('/api/users/:id/requests', function (req, res) {
-	console.log(req.body);
 	db.User.findById( req.params.id, function (err, user) {
-		// console.log("user is: " + user);
-
-
 		db.Request.create(req.body, function (err, request) {
-			// console.log("new request created");
 			if (err) console.log(err);
-			// console.log("request is: ", request);
 			user.requests.push(request);
 			user.save(function (err) {
 				if (err) console.log(err);
 			});
 			res.json(user);			
 		});
-
-			console.log("final user with request is: ", user);
-
-	});
-	
+	});	
 });
-//route for modifying a request
+
+//route for modifying the completed attribute of a request
 app.put('/api/users/:userid/requests/:id', function (req, res) {
 	db.User.findById( req.params.userid, function (err, user) {
 		if (err) console.log(err);
@@ -121,10 +112,22 @@ app.put('/api/users/:userid/requests/:id', function (req, res) {
 			console.log("now user is: ", user);
 			res.json(user);
 		});
-			
-		
 	});
 });
+
+//route for deleting a request
+app.delete('/api/users/:userid/requests/:id', function (req, res) {
+	db.User.findById( req.params.userid, function (err, user) {
+		console.log("user is: ", user);
+		user.requests.id(req.params.id).remove();
+		user.save(function (err) {
+			if (err) console.log(err);
+			console.log("request has been deleted, now user is: ", user);
+			res.json(user);
+		});
+	});
+});
+
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("express-heroku-starter is running on port 3000");

@@ -107,20 +107,28 @@ $('#log-out').on('click', function(e) {
 
   //When delete button is clicked remove post
   $('.requests').on('click', '.delete', function() {
+    var deleteRequest = $(this).closest('li');
   	console.log("delete button was clicked");
-  	var deleteRequest = $(this).closest('li');
-  	$(deleteRequest).remove();
+    var userId = $('#new-request-input').attr('data-id');
+    console.log("userId is: " + userId);
+    var requestId = deleteRequest.attr('data-id');
+    console.log("requestId is: " + requestId);
+    $.ajax({
+      url: '/api/users/' + userId + '/requests/' + requestId,
+      type: "DELETE"
+    })
+    .done(function (data) {
+      console.log("request deleted");
+      $(deleteRequest).remove();
+    });
   });
 
   //When mark as answered button is clicked 
   $('.requests').on('click', '.answered', function(e) {
     e.preventDefault();
-  	console.log("answered button was clicked");
   	var answerRequest = $(this).closest('li');
     var userId = $('#new-request-input').attr('data-id');
-    console.log("userID is: " + userId);
     var requestId = answerRequest.attr('data-id');
-    console.log("requestId is: " + requestId);
     $.ajax({
       url: '/api/users/' + userId + '/requests/' + requestId,
       type: "PUT"
