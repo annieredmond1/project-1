@@ -1,9 +1,17 @@
 var mongoose = require('mongoose'),
-	Request = require('./request'),
 	bcrypt = require('bcrypt'),
 	salt = bcrypt.genSaltSync(10);
 
 var Schema = mongoose.Schema;
+
+var RequestSchema = new Schema ({
+	completed: {type: Boolean, default: false},
+    description: { type: String, required: true}, 
+    prayerCount: { type: Number, default: 0},
+    createdAt: { type: Date, default: Date.now }
+    
+});
+
 
 var UserSchema = new Schema ({
 	email: {type: String, require: true, unique: true},
@@ -11,7 +19,7 @@ var UserSchema = new Schema ({
     first_name: { type: String },
     last_name: { type: String },
     description: { type: String },
-    requests: [Request.schema]
+    requests: [RequestSchema]
 });
 
 
@@ -52,6 +60,7 @@ UserSchema.methods.checkPassword = function(password) {
 
 
 var User = mongoose.model('User', UserSchema);
+
 
 
 module.exports = User;

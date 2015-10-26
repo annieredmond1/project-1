@@ -69,7 +69,7 @@ $('#log-out').on('click', function(e) {
     var user = $(this).serialize();
     console.log("user is: " + user);
     $.ajax({
-      url: 'api/login',
+      url: '/api/login',
       type: "POST",
       data: user
     })

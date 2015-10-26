@@ -10,7 +10,6 @@ var mongoose = require("mongoose");
 var User = require('./models/user');
 var db = require("./models/index");
 var bcrypt = require('bcrypt');
-var Request = require('./models/request');
 
 
 //MIDDLEWARE
@@ -73,7 +72,7 @@ app.get('/api/current-user', function (req, res) {
 });
 
 //route for logging in
-app.post('/users/api/login', function (req, res) {
+app.post('/api/login', function (req, res) {
 	var user = req.body;
 	User.authenticate(user.email, user.password, function (err, user) {
 		if (err) console.log(err);
@@ -100,7 +99,9 @@ app.post('/api/users/:id/requests', function (req, res) {
 			if (err) console.log(err);
 			// console.log("request is: ", request);
 			user.requests.push(request);
-			user.save();
+			user.save(function (err) {
+				if (err) console.log(err);
+			});
 			res.json(user);			
 		});
 
@@ -110,18 +111,18 @@ app.post('/api/users/:id/requests', function (req, res) {
 	
 });
 //route for modifying a request
-app.put('/api/users/:id/requests/:id', function (req, res) {
-	db.User.findById( req.params.id, function (err, user) {
+app.put('/api/users/:userid/requests/:id', function (req, res) {
+	db.User.findById( req.params.userid, function (err, user) {
 		if (err) console.log(err);
 		console.log("user is", user);
-		db.Request.findById( req.params.id, function (err, request) {
+		user.requests.id(req.params.id).completed = true;
+		user.save(function (err) {
 			if (err) console.log(err);
-			request.completed = true;
-			request.save();
-			user.save();
-			console.log("request is :", request);
-			res.json(request);
+			console.log("now user is: ", user);
+			res.json(user);
 		});
+			
+		
 	});
 });
 

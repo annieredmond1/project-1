@@ -13,5 +13,5 @@ db.once('open', function (callback) {
 });
 
 module.exports.User = require('./user.js');
-module.exports.Request = require('./request.js');
+
 
