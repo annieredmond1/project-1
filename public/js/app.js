@@ -40,7 +40,7 @@ $('#signUpForm').on('submit', function(e) {
   })
   .done(function(data) {
 
-    window.location.href = "/" + data._id;
+    window.location.href = "/users/" + data._id;
     console.log("made a new user");
 
   });
