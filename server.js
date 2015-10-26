@@ -91,11 +91,14 @@ app.post('/api/:id/requests', function (req, res) {
 	console.log(req.body);
 	db.User.findById( req.params.id, function (err, user) {
 		// console.log("user is: " + user);
+
+
 		db.Request.create(req.body, function (err, request) {
 			// console.log("new request created");
 			if (err) console.log(err);
 			// console.log("request is: ", request);
-			user.push(request);
+			user.requests.push(request);
+			user.save();
 			res.json(request);			
 		});
 
