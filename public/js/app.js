@@ -81,7 +81,7 @@ $('#log-out').on('click', function(e) {
 
   
   //When new prayer request is submitted
-  $('#new-request').on('click', function(e) {
+  $('#new-request').on('submit', function(e) {
   	e.preventDefault();
     console.log('form submitted');
     var userId = $('#new-request-input').attr('data-id');
@@ -90,14 +90,16 @@ $('#log-out').on('click', function(e) {
     console.log("formData is: " + formData);
     var newRequest = $( '#new-request-input').val();
   	console.log("request is: " + newRequest);
+    $('#new-request')[0].reset();
   	$.ajax({
-      url: '/api/users' + userId + '/requests',
+      url: '/api/users/' + userId + '/requests',
       type: "POST",
       data: formData
     })
-    .done(function(data) {
+    .done(function(user) {
       console.log("made a new post");
-        var requestHtml = "<li class='well'>" + newRequest + "<br><br><input class='answered' type='button' value='Mark as answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+      console.log("data-id will be: " + user.requests[0]._id);
+        var requestHtml = "<li class='well' data-id='" + user.requests[0]._id + "'>" + newRequest + "<br><br><input class='answered' type='button' value='Answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
         
         $('.active').prepend(requestHtml);
       });
@@ -129,6 +131,7 @@ $('#log-out').on('click', function(e) {
   	var answerRequest = $(this).closest('li');
     var userId = $('#new-request-input').attr('data-id');
     var requestId = answerRequest.attr('data-id');
+    console.log("requestId is: " + requestId);
     $.ajax({
       url: '/api/users/' + userId + '/requests/' + requestId,
       type: "PUT"

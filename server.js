@@ -90,14 +90,15 @@ app.get('/api/logout', function (req, res) {
 //route for creating a request
 app.post('/api/users/:id/requests', function (req, res) {
 	db.User.findById( req.params.id, function (err, user) {
-		db.Request.create(req.body, function (err, request) {
 			if (err) console.log(err);
-			user.requests.push(request);
+			user.requests.push(req.body);
+			console.log(req.body);
 			user.save(function (err) {
 				if (err) console.log(err);
+				res.json(user);	
 			});
-			res.json(user);			
-		});
+					
+		
 	});	
 });
 
