@@ -9,8 +9,7 @@
 body {
 	font-family: 'Montserrat', sans-serif;
 	font-size: 16px;
-	color: white;
-	text-shadow: 1px 1px 2px black;
+	color: black;
 	background: url('https://images.unsplash.com/photo-1445445290350-18a3b86e0b5a?q=80&fm=jpg&s=4ca5b01c43928584a67189ea20c0375f') no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -21,16 +20,26 @@ body {
 
 }
 
-.completed .well {
-	opacity: .6;
-}
-.page-header {
+.navbar-header .navbar-brand {
 	color: white;
 }
 
-.welcome-info {
+.navbar-header .navbar-brand:hover {
+	color: white;
+}
+.completed .well {
+	opacity: .6;
+}
+.page-header h3, h1 {
+	color: white;
+	text-shadow: 1px 1px 2px black;
+}
+
+
+
+.welcome-info p {
 	font-size: 40px;
-	margin-top: 100px;
+	color: white;
 	
 		
 }
