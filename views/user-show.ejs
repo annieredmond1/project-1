@@ -60,7 +60,7 @@
         <ul class=" completed list-unstyled">
           <% for(var i = user.requests.length - 1; i>=0; i--) { %>
             <% if(user.requests[i].completed) { %>
-              <li class="well" data-id="<%=user.requests[i]._id%>"><strike><%=user.requests[i].description%></strike>
+              <li class="well" data-id="<%=user.requests[i]._id%>"><%=user.requests[i].description%>
                 <p><strong>Prayer count: <span class="pray-count"> <%= user.requests[i].prayerCount %></span></strong></p>
                   <!-- show if owner -->
                     <input class="delete owner" type="button" value="Delete"></input>

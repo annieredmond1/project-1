@@ -21,6 +21,9 @@ body {
 
 }
 
+.completed .well {
+	opacity: .6;
+}
 .page-header {
 	color: white;
 }

@@ -1,5 +1,7 @@
 // CLIENT-SIDE JAVASCRIPT
 
+//TODO
+
 // On page load
 $(document).ready(function(){
   console.log('Javascript is working!');
@@ -10,7 +12,7 @@ var owner;
 function checkAuth() {
   $.get('/api/current-user', function (data) {
     console.log("data is: " + data);
-    if (data.user) {
+    if (data.user || data.userId) {
       console.log("logged in");
       $('.not-logged-in').hide();
       $('.visitor').hide();
@@ -138,9 +140,10 @@ $('#log-out').on('click', function(e) {
     })
     .done(function(data) {
       console.log("request marked as completed");
-      answerRequest.wrap('<strike>');
+      answerRequest.find('input.answered').remove();
+      answerRequest.css("opacity", "0.5");
     });
-  });
+  });   
 
   //When prayed for button is clicked
   $('.requests').on('click', '.count', function() {
@@ -155,6 +158,7 @@ $('#log-out').on('click', function(e) {
       type: "PUT"
     })
     .done(function(data) {
+      //update the prayer count number before page refreshes
       console.log("request prayed for");
       var num = prayerRequest.find('span.pray-count').text();
       console.log('num value is: ', num);
@@ -164,8 +168,6 @@ $('#log-out').on('click', function(e) {
       num = prayerRequest.find('span.pray-count').text(numString);
 
     });
-
-
   });
 
 

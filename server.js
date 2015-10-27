@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 var User = require('./models/user');
 var db = require("./models/index");
 var bcrypt = require('bcrypt');
+var cookieParser = require('cookie-parser');
 
 
 //MIDDLEWARE
@@ -18,12 +19,14 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(cookieParser());
+
 //set session options
 app.use(session({
 	saveUnitialized: true,
 	resave: true,
 	secret: "SuperSecretCookie",
-	cookie: { maxAge: 600000}
+	cookie: { maxAge: (60 * 60 * 1000)}
 }));
 
 
@@ -60,6 +63,7 @@ app.post('/api/users', function(req, res) {
 	db.User.createSecure(user, function(err, user) {
 		if (err) console.log(err);
 		req.session.user = user;
+		res.cookie('userId', user._id);
 		console.log("user is: " + user);
 		res.json(user);
 	});
@@ -68,7 +72,7 @@ app.post('/api/users', function(req, res) {
 //route for check if current user
 app.get('/api/current-user', function (req, res) {
 	console.log("found current user");
-	res.json({ user: req.session.user });
+	res.json({ user: req.session.user, userId: req.cookies.userId });
 });
 
 //route for logging in
@@ -76,7 +80,8 @@ app.post('/api/login', function (req, res) {
 	var user = req.body;
 	User.authenticate(user.email, user.password, function (err, user) {
 		if (err) console.log(err);
-		req.session.user = user;	
+		req.session.user = user;
+		res.cookie('userId', user._id);	
 		res.json(user);
 	});
 });
@@ -84,6 +89,7 @@ app.post('/api/login', function (req, res) {
 //route for logging out
 app.get('/api/logout', function (req, res) {
 	req.session.user = null;
+	res.clearCookie('userId', {path: '/'});
 	res.json({ msg: "User logged out successfully" });
 });
 
