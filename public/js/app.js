@@ -99,7 +99,7 @@ $('#log-out').on('click', function(e) {
     .done(function(user) {
       console.log("made a new post");
       console.log("data-id will be: " + user.requests[0]._id);
-        var requestHtml = "<li class='well' data-id='" + user.requests[0]._id + "'>" + newRequest + "<br><br><input class='answered' type='button' value='Answered'></input><br><br><input class='delete' type='button' value='Delete'></input></li>";
+        var requestHtml = "<li class='well' data-id='" + user.requests[0]._id + "'>" + newRequest + "<input class='answered' type='button' value='Answered'></input><input class='delete' type='button' value='Delete'></input></li>";
         
         $('.active').prepend(requestHtml);
       });
@@ -121,7 +121,10 @@ $('#log-out').on('click', function(e) {
     })
     .done(function (data) {
       console.log("request deleted");
-      $(deleteRequest).remove();
+      if (confirm("Are you sure?")) {
+        $(deleteRequest).remove();
+      }
+      
     });
   });
 
