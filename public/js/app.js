@@ -99,7 +99,7 @@ $('#log-out').on('click', function(e) {
     .done(function(user) {
       console.log("made a new post");
       console.log("data-id will be: " + user.requests[0]._id);
-        var requestHtml = "<li class='well' data-id='" + user.requests[0]._id + "'>" + newRequest + "<input class='answered' type='button' value='Answered'></input><input class='delete' type='button' value='Delete'></input></li>";
+        var requestHtml = "<li class='well' data-id='" + user.requests[user.requests.length-1]._id + "'>" + newRequest + "<p><strong>Prayer count: <span class='pray-count'>" + user.requests[user.requests.length-1].prayerCount + " </span></strong></p><input class='answered' type='button' value='Answered'></input><input class='delete' type='button' value='Delete'></input></li>";
         
         $('.active').prepend(requestHtml);
       });
@@ -120,10 +120,7 @@ $('#log-out').on('click', function(e) {
       type: "DELETE"
     })
     .done(function (data) {
-      console.log("request deleted");
-      if (confirm("Are you sure?")) {
         $(deleteRequest).remove();
-      }
       
     });
   });
@@ -159,6 +156,13 @@ $('#log-out').on('click', function(e) {
     })
     .done(function(data) {
       console.log("request prayed for");
+      var num = prayerRequest.find('span.pray-count').text();
+      console.log('num value is: ', num);
+      var numInt = parseInt(num, 10);
+      numInt++;
+      numString = numInt.toString();
+      num = prayerRequest.find('span.pray-count').text(numString);
+
     });
 
 
