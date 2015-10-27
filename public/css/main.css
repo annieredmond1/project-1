@@ -1,15 +1,16 @@
 .navbar {
 	margin:0;
 	border-radius: 0;
-	background-color: rgba(202, 163, 94, .5);
+	background-color: rgba(44, 35, 40, .5);
 	border: none;
 	
 }
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	color: #443616;
-	background: url('http://i.imgur.com/oNLNwBm.jpg') no-repeat center center fixed; 
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	background: url('https://images.unsplash.com/photo-1445445290350-18a3b86e0b5a?q=80&fm=jpg&s=4ca5b01c43928584a67189ea20c0375f') no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -19,18 +20,37 @@ body {
 }
 
 .welcome-info {
-	font-size: 20px;
-	margin-top: 200px;
+	font-size: 40px;
+	margin-top: 100px;
 	
 		
 }
 .welcome-info h1 {
-	font-size: 80px;
+	font-size: 100px;
+	color: white;
+
+}
+.welcome-info li {
+	font-size: 20px;
+	color: white;
+	text-shadow: 1px 1px 2px black;
+}
+
+input {
+	background: #fff;
 }
 
 .well {
 	background: white;
-	border-radius: 0px;
+	border-radius: 10px;
 	border: 1px solid rgba(202, 163, 94, .5);
 }
 
+li {
+	text-shadow: none;
+	color: rgba(44, 35, 40, 1);
+}
+
+#email, #password {
+	background-color: white;
+}

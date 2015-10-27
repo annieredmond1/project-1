@@ -116,6 +116,20 @@ app.put('/api/users/:userid/requests/:id', function (req, res) {
 	});
 });
 
+//route for adding to the prayerCount
+app.put('/api/users/:userid/requests/count/:id', function (req, res) {
+	db.User.findById( req.params.userid, function (err, user) {
+		if (err) console.log(err);
+		console.log("user is: ", user);
+		user.requests.id(req.params.id).prayerCount++;
+		user.save(function (err) {
+			if (err) console.log(err);
+			console.log("user with new prayer count is: ", user);
+			res.json(user);
+		});
+	});
+});
+
 //route for deleting a request
 app.delete('/api/users/:userid/requests/:id', function (req, res) {
 	db.User.findById( req.params.userid, function (err, user) {

@@ -140,26 +140,23 @@ $('#log-out').on('click', function(e) {
       console.log("request marked as completed");
       answerRequest.wrap('<strike>');
     });
-  	
   });
 
-  
-
-  $('#view-public').on('click', function() {
-  	console.log('change to public view is clicked');
-    // if(publicView) {
-    //   publicView = false;
-    // } else {
-    //   publicView = true;
-    // }
-  	
-  });
-
-  //When prayed for button is clicked - update count
-  var requests;
+  //When prayed for button is clicked
   $('.requests').on('click', '.count', function() {
     console.log("count button clicked");
-    console.log();
+    var prayerRequest = $(this).closest('li');
+    var userId = $('#new-request-input').attr('data-id');
+    console.log("user id is: " + userId);
+    var requestId = prayerRequest.attr('data-id');
+    console.log("requestId is: " + requestId);
+    $.ajax({
+      url: '/api/users/' + userId + '/requests/count/' + requestId,
+      type: "PUT"
+    })
+    .done(function(data) {
+      console.log("request prayed for");
+    });
 
 
   });

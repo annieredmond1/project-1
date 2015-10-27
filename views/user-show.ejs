@@ -48,7 +48,7 @@
               <li class="well" data-id="<%=user.requests[i]._id%>"><%=user.requests[i].description%>
                 <br>
                 <br>
-                <p><strong>Prayed for <%= user.requests[i].count %> times</strong></p>
+                <p><strong>Prayed for <%=user.requests[i].prayerCount%> times</strong></p>
                 <br>
                 <br>
                 <!-- show if owner -->
@@ -56,11 +56,11 @@
                 <br>
                 <br>
                 <input class="delete owner" type="button" value="Delete"></input>
-                  <span class="prayer-count">
+                  
                   
                   <!-- show if visitor -->
                   <label><button type="button" class="btn btn-default btn-xs count visitor">I prayed for this request</button></label>
-                  </span>
+                  
               </li>
             <% } %>
           <% } %>
