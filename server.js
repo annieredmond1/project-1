@@ -11,7 +11,7 @@ var User = require('./models/user');
 var db = require("./models/index");
 var bcrypt = require('bcrypt');
 var cookieParser = require('cookie-parser');
-var bootstrap_confirm_delete = require('bootstrap_confirm_delete');
+
 
 
 //MIDDLEWARE
@@ -80,10 +80,13 @@ app.get('/api/current-user', function (req, res) {
 app.post('/api/login', function (req, res) {
 	var user = req.body;
 	User.authenticate(user.email, user.password, function (err, user) {
-		if (err) console.log(err);
-		req.session.user = user;
-		res.cookie('userId', user._id);	
-		res.json(user);
+		if (err) {
+			res.send(err);
+		} else {
+			req.session.user = user;
+			res.cookie('userId', user._id);	
+			res.json(user);
+		}
 	});
 });
 
@@ -109,12 +112,14 @@ app.post('/api/users/:id/requests', function (req, res) {
 	});	
 });
 
-//route for modifying the completed attribute of a request
+//route for modifying the request
 app.put('/api/users/:userid/requests/:id', function (req, res) {
 	db.User.findById( req.params.userid, function (err, user) {
 		if (err) console.log(err);
 		console.log("user is", user);
+		console.log("req.body is: " + req.body.comment);
 		user.requests.id(req.params.id).completed = true;
+		user.requests.id(req.params.id).comment = req.body.comment;
 		user.save(function (err) {
 			if (err) console.log(err);
 			console.log("now user is: ", user);

@@ -64,6 +64,7 @@ input {
 	border: 1px solid rgba(202, 163, 94, .5);
 	box-shadow: 10px 5px 15px black;
 	margin-top: 30px;
+	padding-bottom: 30px;
 }
 
 li {

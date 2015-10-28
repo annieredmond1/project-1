@@ -8,7 +8,8 @@ var RequestSchema = new Schema ({
 	completed: {type: Boolean, default: false},
     description: { type: String, required: true}, 
     prayerCount: { type: Number, default: 0},
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    comment: { type: String, default: "" }
     
 });
 
@@ -44,11 +45,10 @@ UserSchema.statics.createSecure = function(userKeys, callback) {
 
 UserSchema.statics.authenticate = function(email, password, callback) {
 	this.findOne({email: email}, function(err, user) {
-		console.log(user);
-
 		if(!user) {
 			console.log("No user with email " + email, null);
 		} else if(user.checkPassword(password)) {
+			console.log("password incorrect");
 			callback(null, user);
 		}
 	});

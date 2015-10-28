@@ -6,6 +6,28 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
+//hide error messages
+  $('.log-in-error').hide();
+
+//validations
+  $('#signUpForm').validate({
+    rules: {
+      email: {
+            required: true,
+            email: true
+          },
+      password: {
+            required: true,
+            minlength: 4
+          },
+      password2: {
+            required: true,
+            minlength: 4,
+            equalTo: '#password'
+      }
+    }
+  });
+
 //variable to identify if user is logged in
 var owner;
 //check if a user is logged in
@@ -32,20 +54,25 @@ checkAuth();
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
-  console.log("form submitted");
-  var user = $(this).serialize();
-  console.log(user);
-  $.ajax({
-      url: '/api/users',
-      type: "POST",
-      data: user
-  })
-  .done(function(data) {
 
-    window.location.href = "/users/" + data._id;
-    console.log("made a new user");
+    console.log("form submitted");
+    var user = $(this).serialize();
+    console.log(user);
+    $.ajax({
+        url: '/api/users',
+        type: "POST",
+        data: user
+    })
+    .done(function(data) {
 
-  });
+      window.location.href = "/users/" + data._id;
+      console.log("made a new user");
+
+    })
+    .fail(function(err) {
+      console.log("could not create user");
+    });
+ 
 });
 
 //when log out button is clicked
@@ -64,6 +91,15 @@ $('#log-out').on('click', function(e) {
 
 });
 
+
+//error handler function
+function errorHandler() {
+  //data.message //=> message: "Post validation failed"
+  var msg = "Email or password incorrect"; // Object name
+  $('#alert').addClass('alert-danger').text(msg).fadeIn();
+  setTimeout(function() { $('#alert').fadeOut(); }, 4000);
+}
+
 // When user logs in
   $('#log-in').on('submit', function(e) {
     e.preventDefault();
@@ -78,7 +114,9 @@ $('#log-out').on('click', function(e) {
     .done(function(data) {
       console.log("user logged in");
       window.location.href = "/users/" + data._id;
-    });
+    })
+    .fail(errorHandler());
+     
   });
 
   
@@ -108,39 +146,63 @@ $('#log-out').on('click', function(e) {
 
     });
 
+//give form in modal a data-id based on the request
+  $('.openModal').on('click', function() {
+    var id = $(this).attr('data-id');
+    console.log("id is: " + id);
+    $('.answeredForm').attr('data-id', id);
+    
+  });
 
-  //When delete button is clicked remove post
-  $('.requests').on('bootstrap_confirm_delete', '.delete', function() {
+  //give form in modal a data-id based on the request
+  $('.deleteModal').on('click', function() {
+    console.log("delete button is clicked");
+    var id = $(this).attr('data-id');
+    console.log("id is: " + id);
+    $('.deleteForm').attr('data-id', id);
+    $('.answeredForm').attr('data-id', id);
+  });
+
+  // //When delete button is clicked remove post
+  $('.deleteForm').on('submit', function(e) {
+    e.preventDefault();
     var deleteRequest = $(this).closest('li');
   	console.log("delete button was clicked");
     var userId = $('#new-request-input').attr('data-id');
     console.log("userId is: " + userId);
-    var requestId = deleteRequest.attr('data-id');
+    var requestId = $(this).attr('data-id');
     console.log("requestId is: " + requestId);
     $.ajax({
       url: '/api/users/' + userId + '/requests/' + requestId,
       type: "DELETE"
     })
     .done(function (data) {
-        $(deleteRequest).remove();
+      $('#delete-modal').trigger('click');
+      console.log(deleteRequest);
+      $(deleteRequest).remove();
       
     });
   });
 
   //When mark as answered button is clicked 
-  $('.requests').on('click', '.answered', function(e) {
+  $('.answeredForm').on('submit', function(e) {
     e.preventDefault();
+    console.log("answered form submitted");
   	var answerRequest = $(this).closest('li');
     var userId = $('#new-request-input').attr('data-id');
-    var requestId = answerRequest.attr('data-id');
+    var requestId = $(this).attr('data-id');
+    var formData = $('#inputAnswered').serialize();
+    console.log("comment is: " + formData);
     console.log("requestId is: " + requestId);
     $.ajax({
       url: '/api/users/' + userId + '/requests/' + requestId,
-      type: "PUT"
+      type: "PUT",
+      data: formData
     })
     .done(function(data) {
       console.log("request marked as completed");
-      answerRequest.find('input.answered').remove();
+      $('#close-modal').trigger('click');
+      answerRequest.find('button.openModal').remove();
       answerRequest.css("opacity", "0.5");
     });
   });   

@@ -5,7 +5,12 @@
 </head>
 <body>
 <% include ./_nav %>
-
+<div class="log-in-error">
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> Email or password incorrect.
+    </div>
+</div>
   <div class="welcome-info text-center">
     <h1>Prayer</h1>
     <p>An interactive alternative to emailing prayer requests</p>
@@ -46,19 +51,19 @@
           <div class="form-group">
             <label for="inputEmail" class="col-sm-3 control-label">**Email</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="email" id="inputEmail" placeholder="Email...">
+              <input type="text" class="form-control required" name="email" id="inputEmail" placeholder="Email...">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword" class="col-sm-3 control-label">**Password</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control"name="password" id="inputPassword" placeholder="Create password...">
+              <input type="password" class="form-control required"name="password" id="inputPassword" placeholder="Create password...">
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword2" class="col-sm-3 control-label">**Password</label>
+            <label for="inputPassword2" class="col-sm-3 control-label required">**Password</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control" id="inputPassword2" placeholder="Confirm password...">
+              <input type="password" class="form-control" name="password2" id="inputPassword2" placeholder="Confirm password...">
             </div>
           </div>
           <div class="modal-footer">
