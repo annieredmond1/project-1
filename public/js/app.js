@@ -59,6 +59,16 @@ function checkAuth() {
 
 checkAuth();
 
+//error handler function
+function errorHandler(msg, type) {
+  //data.message //=> message: "Post validation failed"
+  $('#alert').addClass('alert-danger').text(msg).fadeIn();
+  setTimeout(function() { $('#alert').fadeOut(); }, 4000);
+  $('#alert-sign-up').addClass('alert-danger').text(msg).fadeIn();
+  setTimeout(function() { $('#alert-sign-up').fadeOut(); }, 4000);
+  
+}
+
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
@@ -72,13 +82,19 @@ $('#signUpForm').on('submit', function(e) {
         data: user
     })
     .done(function(data) {
-
+      if (data.status == 404) {
+        console.log("err message should activate");
+        var msg = "Email already in use";
+        errorHandler(msg, 'alert-danger');
+      } else {
       window.location.href = "/users/" + data._id;
       console.log("made a new user");
-
+    }
     })
     .fail(function(err) {
       console.log("could not create user");
+      var msg = "Email already in use";
+        errorHandler(msg, 'alert-danger');
     });
  
 });
@@ -100,12 +116,7 @@ $('#log-out').on('click', function(e) {
 });
 
 
-//error handler function
-function errorHandler(msg, type) {
-  //data.message //=> message: "Post validation failed"
-  $('#alert').addClass('alert-danger').text(msg).fadeIn();
-  setTimeout(function() { $('#alert').fadeOut(); }, 4000);
-}
+
 
 // When user logs in
   $('#log-in').on('submit', function(e) {

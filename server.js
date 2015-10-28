@@ -62,11 +62,15 @@ app.get('/users/:id', function(req, res) {
 app.post('/api/users', function(req, res) {
 	var user = req.body;
 	db.User.createSecure(user, function(err, user) {
-		if (err) console.log(err);
+		if (err) {
+			console.log(err);
+			res.status(404).send("<p>Error</p>");
+		} else {
 		req.session.user = user;
 		res.cookie('userId', user._id);
 		console.log("user is: " + user);
 		res.json(user);
+	}
 	});
 });
 
