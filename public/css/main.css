@@ -58,6 +58,9 @@ input {
 	background: #fff;
 }
 
+.alert {
+	display: none;
+}
 .well {
 	background: white;
 	border-radius: 0px;

@@ -1,26 +1,29 @@
 var mongoose = require('mongoose'),
-	bcrypt = require('bcrypt'),
-	salt = bcrypt.genSaltSync(10);
+bcrypt = require('bcrypt'),
+salt = bcrypt.genSaltSync(10);
 
 var Schema = mongoose.Schema;
 
 var RequestSchema = new Schema ({
 	completed: {type: Boolean, default: false},
-    description: { type: String, required: true}, 
-    prayerCount: { type: Number, default: 0},
-    createdAt: { type: Date, default: Date.now },
-    comment: { type: String, default: "" }
-    
+	description: { type: String, required: true}, 
+	prayerCount: { type: Number, default: 0},
+	createdAt: { type: Date, default: Date.now },
+	comment: { type: String, default: "" }
+
 });
 
+function toLower (v) {
+	return v.toLowerCase();
+}
 
 var UserSchema = new Schema ({
-	email: {type: String, require: true, unique: true},
-    passwordDigest: { type: String, require: true}, 
-    first_name: { type: String },
-    last_name: { type: String },
-    description: { type: String },
-    requests: [RequestSchema]
+	email: {type: String, required: true, unique: true, set: toLower },
+	passwordDigest: { type: String, required: true, }, 
+	first_name: { type: String },
+	last_name: { type: String },
+	description: { type: String },
+	requests: [RequestSchema]
 });
 
 
@@ -45,13 +48,20 @@ UserSchema.statics.createSecure = function(userKeys, callback) {
 
 UserSchema.statics.authenticate = function(email, password, callback) {
 	this.findOne({email: email}, function(err, user) {
-		if(!user) {
-			console.log("No user with email " + email, null);
-		} else if(user.checkPassword(password)) {
-			console.log("password incorrect");
-			callback(null, user);
-		}
-	});
+		// ).select('email passwordDigest').exec(function(err, user) {
+			console.log("in authenticate: error and user are:", err, user);
+			if (!user) {
+				console.log("No user with email " + email, null);
+				console.log("err: ", err);
+				callback(err, null);
+			} else if(user.checkPassword(password)) {
+				console.log("password correct");
+				callback(null, user);
+			} else if (!user.checkPassword(password)) {
+				console.log("wrong password");
+				callback(null, null);
+			}
+		});
 };
 
 UserSchema.methods.checkPassword = function(password) {

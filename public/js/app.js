@@ -6,9 +6,6 @@
 $(document).ready(function(){
   console.log('Javascript is working!');
 
-//hide error messages
-  $('.log-in-error').hide();
-
 //validations
   $('#signUpForm').validate({
     rules: {
@@ -27,6 +24,17 @@ $(document).ready(function(){
       }
     }
   });
+  // $('#log-in').validate({
+  //   rules: {
+  //     email: {
+  //         required: true,
+  //         email: true
+  //       },
+  //     password: {
+  //         required: true
+  //       }
+  //   }
+  // });
 
 //variable to identify if user is logged in
 var owner;
@@ -93,9 +101,8 @@ $('#log-out').on('click', function(e) {
 
 
 //error handler function
-function errorHandler() {
+function errorHandler(msg, type) {
   //data.message //=> message: "Post validation failed"
-  var msg = "Email or password incorrect"; // Object name
   $('#alert').addClass('alert-danger').text(msg).fadeIn();
   setTimeout(function() { $('#alert').fadeOut(); }, 4000);
 }
@@ -112,10 +119,18 @@ function errorHandler() {
       data: user
     })
     .done(function(data) {
+      if (data.status == 404) {
+        var msg = "Email or password not correct";
+        errorHandler(msg, 'alert-danger');
+      } else {
       console.log("user logged in");
-      window.location.href = "/users/" + data._id;
+        window.location.href = "/users/" + data._id;
+      }
     })
-    .fail(errorHandler());
+    .fail(function() {
+      var msg = "Email or password not correct";
+      errorHandler(msg, 'alert-danger');
+    });
      
   });
 
@@ -145,6 +160,24 @@ function errorHandler() {
       });
 
     });
+
+// <li class="well" data-id="<%=user.requests[i]._id%>"><%=user.requests[i].description%>
+//   <p><strong>Prayer count: <span class="pray-count"> <%= user.requests[i].prayerCount %></span></strong></p>
+//   <!-- show if owner -->
+//   <button type="button" data-id="<%=user.requests[i]._id%>" class="btn btn-default btn-lg openModal" data-toggle="modal" data-target="#answeredModal">
+//     Answered
+//   </button>
+//   <button type="button" data-id="<%=user.requests[i]._id%>" class="close owner deleteModal" data-target="#deletedModal" data-toggle="modal" data-placement="top" title="Delete prayer request" aria-label="Close">
+//     <span aria-hidden="true">X</span></button>
+
+//     </body>
+//     </html
+//   </button>
+
+    
+//     <!-- show if visitor -->
+//     <label><button type="button" class="btn btn-default btn-xs count visitor">I prayed for this request</button></label>
+// </li>
 
 //give form in modal a data-id based on the request
   $('.openModal').on('click', function() {

@@ -79,13 +79,16 @@ app.get('/api/current-user', function (req, res) {
 //route for logging in
 app.post('/api/login', function (req, res) {
 	var user = req.body;
-	User.authenticate(user.email, user.password, function (err, user) {
-		if (err) {
-			res.send(err);
+	User.authenticate(user.email, user.password, function (err, authUser) {
+		console.log("error, authUser", err, authUser);
+		if (!authUser) {
+			console.log("if statemnt works");
+			res.status(404).send("<p>Error</p>");
 		} else {
-			req.session.user = user;
-			res.cookie('userId', user._id);	
-			res.json(user);
+			console.log("no if statement");	
+			req.session.user = authUser;
+			res.cookie('authUserId', authUser._id);	
+			res.json(authUser);
 		}
 	});
 });
@@ -119,7 +122,7 @@ app.put('/api/users/:userid/requests/:id', function (req, res) {
 		console.log("user is", user);
 		console.log("req.body is: " + req.body.comment);
 		user.requests.id(req.params.id).completed = true;
-		user.requests.id(req.params.id).comment = req.body.comment;
+		user.requests.id(req.params.id).comment = req.body;
 		user.save(function (err) {
 			if (err) console.log(err);
 			console.log("now user is: ", user);
