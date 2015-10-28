@@ -11,6 +11,7 @@ var User = require('./models/user');
 var db = require("./models/index");
 var bcrypt = require('bcrypt');
 var cookieParser = require('cookie-parser');
+var bootstrap_confirm_delete = require('bootstrap_confirm_delete');
 
 
 //MIDDLEWARE

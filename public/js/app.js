@@ -58,7 +58,7 @@ $('#log-out').on('click', function(e) {
   })
   .done(function(data) {
     console.log(data.msg);
-    window.location.href = "/";
+    window.location.reload();
 
   });
 
@@ -110,7 +110,7 @@ $('#log-out').on('click', function(e) {
 
 
   //When delete button is clicked remove post
-  $('.requests').on('click', '.delete', function() {
+  $('.requests').on('bootstrap_confirm_delete', '.delete', function() {
     var deleteRequest = $(this).closest('li');
   	console.log("delete button was clicked");
     var userId = $('#new-request-input').attr('data-id');
