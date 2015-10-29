@@ -69,6 +69,15 @@ function errorHandler(msg, type) {
   
 }
 
+//cookie function for prayed cookie
+
+function setPrayerCookie(requestId) {
+   var now = new Date();
+   now.setTime(now.getTime() + 60 * 1000); //Expire in one minute
+   document.cookie = 'name' + requestId + '=1;path=/;expires='+ now.toGMTString()+';';
+   console.log("cookie function ran");
+}
+
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
@@ -242,23 +251,32 @@ $('#log-out').on('click', function(e) {
     console.log("user id is: " + userId);
     var requestId = prayerRequest.attr('data-id');
     console.log("requestId is: " + requestId);
-    $.ajax({
-      url: '/api/users/' + userId + '/requests/count/' + requestId,
-      type: "PUT"
-    })
-    .done(function(data) {
-      //update the prayer count number before page refreshes
-      console.log("request prayed for");
+    // var name = 'name' + requestId;
+    // console.log("cookie is: ", document.cookie.(requestId));
+    // if (document.cookie[requestId]) {
+    //   alert("prayed for button already clicked");
+    // } else {
       var num = prayerRequest.find('span.pray-count').text();
       console.log('num value is: ', num);
       var numInt = parseInt(num, 10);
       numInt++;
       numString = numInt.toString();
       num = prayerRequest.find('span.pray-count').text(numString);
+      
+      $.ajax({
+        url: '/api/users/' + userId + '/requests/count/' + requestId,
+        type: "PUT"
+      })
+      .done(function(data) {
+        //update the prayer count number before page refreshes
+        console.log("request prayed for");
+        
+        // setPrayerCookie(requestId);
+
 
     });
+  // }
   });
-
 
 
 
