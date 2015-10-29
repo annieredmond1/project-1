@@ -72,7 +72,7 @@ function errorHandler(msg, type) {
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
-  if ($('#signUpForm').valid()) {
+  if ($('#signUpForm').validate()) {
     console.log("form submitted");
     var user = $(this).serialize();
     console.log(user);

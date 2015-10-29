@@ -18,8 +18,8 @@ function toLower (v) {
 }
 
 var UserSchema = new Schema ({
-	email: {type: String, required: true, unique: true, set: toLower },
-	passwordDigest: { type: String, required: true }, 
+	email: {type: String, required: true, select: false, unique: true, set: toLower },
+	passwordDigest: { type: String, required: true, select: false }, 
 	first_name: { type: String },
 	last_name: { type: String },
 	description: { type: String },
@@ -47,8 +47,7 @@ UserSchema.statics.createSecure = function(userKeys, callback) {
 };
 
 UserSchema.statics.authenticate = function(email, password, callback) {
-	this.findOne({email: email}, function(err, user) {
-		// ).select('email passwordDigest').exec(function(err, user) {
+	this.findOne({email: email}).select('email passwordDigest').exec(function(err, user) {
 			console.log("in authenticate: error and user are:", err, user);
 			if (!user) {
 				console.log("No user with email " + email, null);
@@ -61,7 +60,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 				console.log("wrong password");
 				callback(null, null);
 			}
-		});
+	});
 };
 
 UserSchema.methods.checkPassword = function(password) {
