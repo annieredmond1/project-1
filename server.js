@@ -11,6 +11,7 @@ var User = require('./models/user');
 var db = require("./models/index");
 var bcrypt = require('bcrypt');
 var cookieParser = require('cookie-parser');
+var MongoStore = require('connect-mongo')(session);
 
 
 
@@ -27,6 +28,8 @@ app.use(session({
 	saveUnitialized: true,
 	resave: true,
 	secret: "SuperSecretCookie",
+	store: new MongoStore({mongooseConnection: mongoose.connection}),
+	ttl: 2 * 24 * 60 * 60,
 	cookie: { maxAge: (60 * 60 * 1000)}
 }));
 
