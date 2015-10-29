@@ -32,6 +32,7 @@ img {
 	border: 1px solid rgba(202, 163, 94, .5);
 	box-shadow: 10px 5px 15px black;
 	margin-top: 30px;
+	margin-bottom: 30px;
 	padding-bottom: 30px;
 }
  h3 {
@@ -51,14 +52,21 @@ img {
 .page-header h3, h1 {
 	color: white;
 	text-shadow: 1px 1px 2px black;
-	margin-top: 140px;
+	margin-top: 100px;
 }
 
 .btn-xl {
 	padding: 30px 40px;
-	font-size: 30px;
+	font-size: 20px;
 	margin-bottom: 100px;
+	display: inline-block;
+
 }
+#sign-button {
+	float: center;
+
+}
+
 
 .welcome-info p {
 	font-size: 40px;
@@ -81,7 +89,7 @@ input {
 	background: #fff;
 }
 #new-request-input {
-	color: black;
+	color: white;
 }
 
 .alert {
@@ -94,6 +102,7 @@ input {
 	box-shadow: 10px 5px 15px black;
 	margin-top: 30px;
 	padding-bottom: 30px;
+	word-wrap: break-word;
 }
 
 li {

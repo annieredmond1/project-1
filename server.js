@@ -108,10 +108,13 @@ app.post('/api/users/:id/requests', function (req, res) {
 	db.User.findById( req.params.id, function (err, user) {
 			if (err) console.log(err);
 			user.requests.push(req.body);
-			console.log(req.body);
+			var request = user.requests[user.requests.length -1];
+			console.log("request is: ", request);
 			user.save(function (err) {
 				if (err) console.log(err);
-				res.json(user);	
+				console.log("user is: ", user);
+				res.json(request);
+
 			});
 					
 		

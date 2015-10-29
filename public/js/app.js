@@ -72,7 +72,7 @@ function errorHandler(msg, type) {
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
-  if ($('#signUpForm').validate()) {
+  if ($('#signUpForm').valid()) {
     console.log("form submitted");
     var user = $(this).serialize();
     console.log(user);
@@ -162,32 +162,15 @@ $('#log-out').on('click', function(e) {
       type: "POST",
       data: formData
     })
-    .done(function(user) {
+    .done(function(request) {
       console.log("made a new post");
-        var requestHtml = "<li class='well' data-id='" + user.requests[user.requests.length-1]._id + "'>" + newRequest + "<p><strong>Prayer count: <span class='pray-count'>" + user.requests[user.requests.length-1].prayerCount + " </span></strong></p><button type='button' data-id='" + user.requests[user.requests.length-1]._id + "' class='btn btn-default btn-lg openModal owner' data-toggle='modal' data-target='#answeredModal'>Answered</button><button type='button' data-id='" + user.requests[user.requests.length-1]._id + "' class='close owner deleteModal' data-target='#deleteModal' data-toggle='modal' data-placement='top' title='Delete prayer request' aria-label='Close'><span aria-hidden='true'>X</span></button><label><button type='button' class='btn btn-default btn-xs count visitor'>I prayed for this request</button><label></li>";
+        var requestHtml = "<li class='well' data-id='" + request._id + "'>" + newRequest + "<p><strong>Prayer count: <span class='pray-count'>" + request.prayerCount + " </span></strong></p><button type='button' data-id='" + request._id + "' class='btn btn-default btn-lg openModal owner' data-toggle='modal' data-target='#answeredModal'>Answered</button><button type='button' data-id='" + request._id + "' class='close owner deleteModal' data-target='#deletedModal' data-toggle='modal' data-placement='top' title='Delete prayer request' aria-label='Close'><span aria-hidden='true'>X</span></button><label><button type='button' class='btn btn-default btn-xs count visitor'>I prayed for this request</button><label></li>";
         $('.active').prepend(requestHtml);
         checkAuth();
       });
 
     });
 
-// <li class="well" data-id="<%=user.requests[i]._id%>"><%=user.requests[i].description%>
-//   <p><strong>Prayer count: <span class="pray-count"> <%= user.requests[i].prayerCount %></span></strong></p>
-//   <!-- show if owner -->
-//   <button type="button" data-id="<%=user.requests[i]._id%>" class="btn btn-default btn-lg openModal" data-toggle="modal" data-target="#answeredModal">
-//     Answered
-//   </button>
-//   <button type="button" data-id="<%=user.requests[i]._id%>" class="close owner deleteModal" data-target="#deletedModal" data-toggle="modal" data-placement="top" title="Delete prayer request" aria-label="Close">
-//     <span aria-hidden="true">X</span></button>
-
-//     </body>
-//     </html
-//   </button>
-
-    
-//     <!-- show if visitor -->
-//     <label><button type="button" class="btn btn-default btn-xs count visitor">I prayed for this request</button></label>
-// </li>
 
 //give form in modal a data-id based on the request
   $('.openModal').on('click', function() {
@@ -208,7 +191,7 @@ $('#log-out').on('click', function(e) {
   // //When delete button is clicked remove post
   $('.deleteForm').on('submit', function(e) {
     e.preventDefault();
-    var requestId = $(this).attr('data-id');
+    var requestId = $(this).data('id');
     var deleteRequest = $('li[data-id="' + requestId + '"]');
   	console.log("delete button was clicked");
     var userId = $('#new-request-input').attr('data-id');

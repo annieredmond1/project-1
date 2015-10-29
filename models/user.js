@@ -52,6 +52,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 			if (!user) {
 				console.log("No user with email " + email, null);
 				console.log("err: ", err);
+				
 				callback(err, null);
 			} else if(user.checkPassword(password)) {
 				console.log("password correct");
