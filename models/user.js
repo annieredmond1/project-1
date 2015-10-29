@@ -33,8 +33,8 @@ UserSchema.statics.createSecure = function(userKeys, callback) {
 
 	bcrypt.genSalt(function(err, salt) {
 		bcrypt.hash(userKeys.password, salt, function(err, hash) {
-			console.log(hash);
-
+			console.log("hash is: ", hash);
+			if(err) console.log("err is: ", err);
 			user.create({
 				email: userKeys.email,
 				passwordDigest: hash,

@@ -72,7 +72,7 @@ function errorHandler(msg, type) {
 //When sign up form submitted
 $('#signUpForm').on('submit', function(e) {
   e.preventDefault();
-
+  if ($('#signUpForm').valid()) {
     console.log("form submitted");
     var user = $(this).serialize();
     console.log(user);
@@ -96,7 +96,7 @@ $('#signUpForm').on('submit', function(e) {
       var msg = "Email already in use";
         errorHandler(msg, 'alert-danger');
     });
- 
+ }
 });
 
 //when log out button is clicked
