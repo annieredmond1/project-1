@@ -164,10 +164,9 @@ $('#log-out').on('click', function(e) {
     })
     .done(function(user) {
       console.log("made a new post");
-      console.log("data-id will be: " + user.requests[0]._id);
-        var requestHtml = "<li class='well' data-id='" + user.requests[user.requests.length-1]._id + "'>" + newRequest + "<p><strong>Prayer count: <span class='pray-count'>" + user.requests[user.requests.length-1].prayerCount + " </span></strong></p><input class='answered' type='button' value='Answered'></input><input class='delete' type='button' value='Delete'></input></li>";
-        
+        var requestHtml = "<li class='well' data-id='" + user.requests[user.requests.length-1]._id + "'>" + newRequest + "<p><strong>Prayer count: <span class='pray-count'>" + user.requests[user.requests.length-1].prayerCount + " </span></strong><button type='button' data-id='" + user.requests[user.requests.length-1]._id + "' class='btn btn default btn-lg openModal owner' data-toggle='modal' data-target='#answeredModal'>Answered</button><button type='button' data-id='" + user.requests[user.requests.length-1]._id + "' class='close owner deleteModal' data-target='#deleteModal' data-toggle='modal' data-placement='top' title='Delete prayer request' aria-label='Close'><span aria-hidden='true'>X</span></button><label><button type='button' class='btn btn-default btn-xs count visitor'>I prayed for this request</button><label></li>";
         $('.active').prepend(requestHtml);
+        checkAuth();
       });
 
     });
@@ -231,10 +230,11 @@ $('#log-out').on('click', function(e) {
   //When mark as answered button is clicked 
   $('.answeredForm').on('submit', function(e) {
     e.preventDefault();
-    console.log("answered form submitted");
-  	var answerRequest = $(this).closest('li');
-    var userId = $('#new-request-input').attr('data-id');
     var requestId = $(this).attr('data-id');
+    console.log("answered form submitted");
+  	var answerRequest = $('li[data-id="' + requestId + '"]');
+    console.log("answer request is: ", answerRequest);
+    var userId = $('#new-request-input').attr('data-id');
     var formData = $('#inputAnswered').serialize();
     console.log("comment is: " + formData);
     console.log("requestId is: " + requestId);

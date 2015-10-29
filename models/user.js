@@ -19,7 +19,7 @@ function toLower (v) {
 
 var UserSchema = new Schema ({
 	email: {type: String, required: true, unique: true, set: toLower },
-	passwordDigest: { type: String, required: true, }, 
+	passwordDigest: { type: String, required: true }, 
 	first_name: { type: String },
 	last_name: { type: String },
 	description: { type: String },

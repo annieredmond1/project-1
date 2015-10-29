@@ -66,10 +66,10 @@ app.post('/api/users', function(req, res) {
 			console.log(err);
 			res.status(404).send("<p>Error</p>");
 		} else {
-		req.session.user = user;
-		res.cookie('userId', user._id);
-		console.log("user is: " + user);
-		res.json(user);
+			req.session.user = user;
+			res.cookie('userId', user._id);
+			console.log("user is: " + user);
+			res.json(user);
 	}
 	});
 });
@@ -86,7 +86,6 @@ app.post('/api/login', function (req, res) {
 	User.authenticate(user.email, user.password, function (err, authUser) {
 		console.log("error, authUser", err, authUser);
 		if (!authUser) {
-			console.log("if statemnt works");
 			res.status(404).send("<p>Error</p>");
 		} else {
 			console.log("no if statement");	
@@ -126,7 +125,7 @@ app.put('/api/users/:userid/requests/:id', function (req, res) {
 		console.log("user is", user);
 		console.log("req.body is: " + req.body.comment);
 		user.requests.id(req.params.id).completed = true;
-		user.requests.id(req.params.id).comment = req.body;
+		user.requests.id(req.params.id).comment = req.body.comment;
 		user.save(function (err) {
 			if (err) console.log(err);
 			console.log("now user is: ", user);
