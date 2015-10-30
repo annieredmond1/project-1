@@ -7,10 +7,10 @@ Description:
 This is an alternative to emailing prayer requests.  When people send out emails to their church/friends/family listing their requests for prayer, there is a lack of two way communication.  An email gets sent out but often there is no response.  Did anyone pray for them?  Likewise when prayer request emails are recieved, there is usually no follow up.  One wonders what happened with the situation being prayed about.  Was the prayer answered.  With my app, users can email the link to their user page to their church and/or friends.  In their user page they can add prayer requests, mark prayer requests as answered, and delete prayer requests.  Anyone with the link to their user page, can mark when they prayed for a prayer request, which will keep a tally of the total times each prayer request has been prayed for.
 
 
-Link to prayer app: [link](https://aqueous-journey-5377.herokuapp.com/).
+[link to app on Heroku](https://aqueous-journey-5377.herokuapp.com/).
 
 
-Link to wireframe: [link](https://moqups.com/annieredmond1@gmail.com/zh1l51qJ).
+[link to wireframes in Moqups](https://moqups.com/annieredmond1@gmail.com/zh1l51qJ).
 
 Relationship Diagrams:
 ---------------------
