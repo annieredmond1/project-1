@@ -29,7 +29,7 @@ app.use(session({
 	resave: true,
 	secret: "SuperSecretCookie",
 	store: new MongoStore({mongooseConnection: mongoose.connection}),
-	ttl: 2 * 24 * 60 * 60,
+	ttl: 24 * 60 * 60,
 	cookie: { maxAge: (60 * 60 * 1000)}
 }));
 

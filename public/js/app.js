@@ -228,6 +228,7 @@ $('#log-out').on('click', function(e) {
     console.log("answer request is: ", answerRequest);
     var userId = $('#new-request-input').attr('data-id');
     var formData = $('#inputAnswered').serialize();
+    var update = $('#inputAnswered').val();
     console.log("comment is: " + formData);
     console.log("requestId is: " + requestId);
     $.ajax({
@@ -240,6 +241,8 @@ $('#log-out').on('click', function(e) {
       $('#close-modal').trigger('click');
       answerRequest.find('button.openModal').remove();
       answerRequest.css("opacity", "0.5");
+      console.log("update is: " + update);
+      answerRequest.append('<p>' + update + '</p>');
     });
   });   
 
