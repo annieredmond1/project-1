@@ -242,7 +242,8 @@ $('#log-out').on('click', function(e) {
       answerRequest.find('button.openModal').remove();
       answerRequest.css("opacity", "0.5");
       console.log("update is: " + update);
-      answerRequest.append('<p>' + update + '</p>');
+      answerRequest.prepend('<h4>Answered Prayer:</h4>');
+      answerRequest.append('<p><strong>Update:</strong> ' + update + '</p>');
     });
   });   
 

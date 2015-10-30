@@ -68,7 +68,7 @@
         <ul class=" completed list-unstyled">
           <% for(var i = user.requests.length - 1; i>=0; i--) { %>
             <% if(user.requests[i].completed) { %>
-              <li class="well" data-id="<%=user.requests[i]._id%>"><%=user.requests[i].description%>
+              <li class="well done" data-id="<%=user.requests[i]._id%>"><h4>Answered Prayer:</h4><%=user.requests[i].description%>
                 <p><strong>Prayer count: <span class="pray-count"> <%= user.requests[i].prayerCount %></span></strong></p>
                 <% if (!!user.requests[i].comment) { %>
                 <p><strong>Update: </strong><%=user.requests[i].comment%>

@@ -8,21 +8,24 @@ This is an alternative to emailing prayer requests.  When people send out emails
 
 
 Link to prayer app: [link](https://aqueous-journey-5377.herokuapp.com/).
-[28]
+
 
 Link to wireframe: [link](https://moqups.com/annieredmond1@gmail.com/zh1l51qJ).
-[28]
+
+Relationship Diagrams:
+---------------------
+User --> (one to many) --> Requests
 
 User narratives:
 ---------------
 
  	* John the "user needing prayer" can log in and add new prayer requests.
 
-	* Amy the "non-user wanting to pray" can use the access code to view John's page and mark off any requests she's prayed for.
+	* Amy the "non-user wanting to pray" can use the link she received from John to view his page and mark off any requests she's prayed for.
 
-	* Sarah the "non-user who wants to make an account" signs up and  invites her friends/family to view her page with her unique access code.
+	* Sarah the "non-user who wants to make an account" signs up and  invites her friends/family to view her page with her unique page link.
 
-	* Mike the "user whose pr has been answered" can login and mark his pr as answered and optionally write a sentence or two describing how it was answered.
+	* Mike the "user whose prayer has been answered" can login and mark his pr as answered and optionally write a sentence or two describing how it was answered.
 
 Libraries used:
 --------------
