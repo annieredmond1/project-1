@@ -20,7 +20,7 @@ $(document).ready(function(){
       password2: {
             required: true,
             minlength: 4,
-            // equalTo: '#password'
+            equalTo: '#inputPassword'
       }
     }
   });
