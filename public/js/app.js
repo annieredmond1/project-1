@@ -21,9 +21,12 @@ $(document).ready(function(){
             required: true,
             minlength: 4,
             equalTo: '#inputPassword'
+
           }
-    }
-  });
+
+      }
+
+    });
   // $('#log-in').validate({
   //   rules: {
   //     email: {
