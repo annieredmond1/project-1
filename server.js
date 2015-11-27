@@ -171,4 +171,3 @@ app.delete('/api/users/:userid/requests/:id', function (req, res) {
 app.listen(process.env.PORT || 3000, function() {
   console.log("express-heroku-starter is running on port 3000");
 });
-
